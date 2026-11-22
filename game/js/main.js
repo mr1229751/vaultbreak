@@ -21,35 +21,43 @@ if (shot === 'select') {
 }
 
 function stageCoverScene(game) {
+  // Round-3 cover: a mid-stealth moment, not a capture. The thief threads
+  // the dark sliver between the hero camera's blue sweep (up from the left
+  // wall) and a guard's amber cone (down from the top-left room), one tile
+  // ahead of a second guard whose back is turned. The alarm sits in the
+  // amber warning band — raised, but nobody has eyes on him yet — and the
+  // gem vault ahead is untouched: the job is in front of him, not behind.
   game.startLevel(2); // AURORA GRAND RESERVE, the richest vault
   const put = (guard, tx, ty, angle) => {
     guard.x = tx * 40 + 20;
     guard.y = ty * 40 + 20;
     guard.angle = angle;
   };
-  put(game.guards[0], 6, 3, 0.9);
-  put(game.guards[1], 26, 4, 2.6);
-  put(game.guards[2], 8, 15, 0.3);
+  // The guard whose cone forms the near side of the gap, top-left room.
+  put(game.guards[0], 6, 3, 1.35);
+  // Back turned, one tile below the thief, cone firing away down the room.
+  put(game.guards[1], 4, 8, Math.PI / 2);
+  put(game.guards[2], 26, 4, 2.6);
   put(game.guards[3], 24, 15, -1.2);
-  game.player.x = 13 * 40 + 20;
-  game.player.y = 5 * 40 + 20;
-  game.player.angle = -0.9;
+  game.player.x = 4 * 40 + 28;
+  game.player.y = 7 * 40 + 20;
+  game.player.angle = 0.2;
   game.cameras[0].angle = Math.PI / 2;
-  game.cameras[0].seesPlayer = true;
-  game.cameras[1].angle = 0.25;
+  // Hero camera: the left-wall mount whose cone the thief is slipping past.
+  // `hero` only fattens its housing in drawCamera; nothing in a real run
+  // ever sets it, so the shipped game's rendering is untouched.
+  game.cameras[1].hero = true;
+  game.cameras[1].angle = -0.85;
   game.cameras[2].angle = 2.8;
-  const takenKinds = ['$', '$', 'g', '*'];
+  // One cash bundle pocketed on the way in; everything else — above all
+  // the gem vault — still waits ahead of him.
   for (const item of game.level.loot) {
-    const at = takenKinds.indexOf(item.kind);
-    if (at >= 0) {
-      item.taken = true;
-      takenKinds.splice(at, 1);
-    }
+    if (item.kind === '$' && item.tx === 6 && item.ty === 8) item.taken = true;
   }
-  game.lootValue = 2000;
-  game.lootTaken = 4;
-  game.alarm = 55;
-  game.spottedNow = true;
+  game.lootValue = 250;
+  game.lootTaken = 1;
+  game.alarm = 46; // the amber band (45-75) — tension without a spotting
+  game.spottedNow = false;
   game.runTime = 74;
   game.hint = null;
   game.frozen = true;
