@@ -95,6 +95,11 @@ export function drawPlayer(ctx, game) {
   ctx.ellipse(p.x, p.y + 11, 13, 5, 0, 0, Math.PI * 2);
   ctx.fillStyle = 'rgba(0,0,0,0.4)';
   ctx.fill();
+  const glow = ctx.createRadialGradient(p.x, p.y, 4, p.x, p.y, 30);
+  glow.addColorStop(0, 'rgba(255, 140, 80, 0.30)');
+  glow.addColorStop(1, 'rgba(255, 140, 80, 0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(p.x - 30, p.y - 30, 60, 60);
   if (ghost) {
     ctx.strokeStyle = 'rgba(200, 220, 255, 0.5)';
     ctx.lineWidth = 2;

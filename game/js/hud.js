@@ -29,9 +29,10 @@ export function drawHUD(ctx, game) {
   ctx.font = 'bold 17px system-ui, sans-serif';
   ctx.fillText(formatTime(game.runTime), 1095, 30);
   drawSmokeCharges(ctx, game, 1130, 14);
+  ctx.textAlign = 'right';
   ctx.fillStyle = game.save.muted ? '#5f6b8a' : '#ffd166';
   ctx.font = 'bold 15px system-ui, sans-serif';
-  ctx.fillText(game.save.muted ? 'MUTE' : 'SOUND', 1266, 30);
+  ctx.fillText(game.save.muted ? 'MUTE' : 'SOUND', 1264, 30);
 
   if (game.hint && game.runTime < game.hint.until) {
     ctx.textAlign = 'center';

@@ -5,10 +5,10 @@
 import { TILE, tileAt, blocksSight } from './levels.js';
 
 export const COLORS = {
-  floor: '#0d1526',
-  floorAlt: '#101a30',
-  wall: '#26335a',
-  wallEdge: '#0b1226',
+  floor: '#141e36',
+  floorAlt: '#18253f',
+  wall: '#33477a',
+  wallEdge: '#0e1730',
   wallTrim: 'rgba(255, 209, 102, 0.28)',
   desk: '#4a3421',
   deskEdge: '#2c1e12',
@@ -183,18 +183,18 @@ function drawVaultDoor(ctx, x, y) {
 
 function drawVent(ctx, x, y, time) {
   const pulse = 0.5 + 0.5 * Math.sin(time * 2 + x * 0.05);
-  ctx.fillStyle = '#131c30';
+  ctx.fillStyle = '#0d2b33';
   roundRect(ctx, x + 5, y + 5, TILE - 10, TILE - 10, 5);
   ctx.fill();
-  ctx.strokeStyle = `rgba(94, 234, 255, ${0.25 + pulse * 0.3})`;
+  ctx.strokeStyle = `rgba(55, 224, 200, ${0.45 + pulse * 0.3})`;
   ctx.lineWidth = 2;
   ctx.stroke();
-  ctx.strokeStyle = 'rgba(160, 190, 240, 0.5)';
+  ctx.strokeStyle = 'rgba(55, 224, 200, 0.65)';
   ctx.lineWidth = 2;
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 4; i++) {
     ctx.beginPath();
-    ctx.moveTo(x + 11, y + 13 + i * 7);
-    ctx.lineTo(x + 29, y + 13 + i * 7);
+    ctx.moveTo(x + 10, y + 12 + i * 6);
+    ctx.lineTo(x + 30, y + 12 + i * 6);
     ctx.stroke();
   }
 }
