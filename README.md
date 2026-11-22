@@ -21,4 +21,6 @@ The game source lives in `game/js`, one job per module:
 - `audio` — WebAudio synth sound effects and mute toggle
 - `save` — progress saved to localStorage
 
-![](https://make.fun/badge/best-heist-game-20261122-0559.svg)![](https://make.fun/badge/best-heist-game-20261122-0559/mr1229751/vaultbreak/rank.svg)![](https://make.fun/badge/best-heist-game-20261122-0559/mr1229751/vaultbreak/reward.svg)
+[![make.fun · best-heist-game-20261122-0559](https://make.fun/badge/best-heist-game-20261122-0559.svg)](https://make.fun/bounty/best-heist-game-20261122-0559?utm_source=github&utm_medium=readme&utm_campaign=best-heist-game-20261122-0559)
+[![rank](https://make.fun/badge/best-heist-game-20261122-0559/mr1229751/vaultbreak/rank.svg)](https://make.fun/bounty/best-heist-game-20261122-0559/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=best-heist-game-20261122-0559)
+[![reward](https://make.fun/badge/best-heist-game-20261122-0559/mr1229751/vaultbreak/reward.svg)](https://make.fun/bounty/best-heist-game-20261122-0559?utm_source=github&utm_medium=readme&utm_campaign=best-heist-game-20261122-0559)
