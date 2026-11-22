@@ -3,6 +3,7 @@
 // the raycast helpers that clip every vision cone against the walls.
 
 import { TILE, tileAt, blocksSight } from './levels.js';
+import { drawFloorDecor, drawWallDecor } from './decor.js';
 
 export const COLORS = {
   floor: '#141e36',
@@ -96,6 +97,7 @@ export function drawRoom(ctx, level, time) {
   for (let ty = 0; ty <= level.height; ty++) {
     ctx.beginPath(); ctx.moveTo(0, ty * TILE); ctx.lineTo(level.width * TILE, ty * TILE); ctx.stroke();
   }
+  drawFloorDecor(ctx, level);
 }
 
 export function drawFurniture(ctx, level) {
@@ -109,6 +111,7 @@ export function drawFurniture(ctx, level) {
       else if (ch === '#') drawWall(ctx, x, y);
     }
   }
+  drawWallDecor(ctx, level);
 }
 
 function drawWall(ctx, x, y) {
@@ -124,23 +127,46 @@ function drawWall(ctx, x, y) {
 }
 
 function drawDesk(ctx, x, y) {
+  // Chair tucked behind the desk.
+  ctx.fillStyle = '#241812';
+  roundRect(ctx, x + 12, y + 31, 16, 8, 3);
+  ctx.fill();
+  ctx.fillStyle = '#31231a';
+  roundRect(ctx, x + 14, y + 28, 12, 5, 2);
+  ctx.fill();
   ctx.fillStyle = COLORS.deskEdge;
   roundRect(ctx, x + 4, y + 8, TILE - 8, TILE - 14, 4);
   ctx.fill();
   ctx.fillStyle = COLORS.desk;
   roundRect(ctx, x + 6, y + 6, TILE - 12, TILE - 14, 4);
   ctx.fill();
+  // Ledger paper, a second sheet, and a dark monitor with a teal glow line.
   ctx.fillStyle = '#e8ddc0';
   ctx.fillRect(x + 11, y + 12, 9, 12);
+  ctx.fillStyle = '#cfc4a4';
+  ctx.fillRect(x + 12, y + 21, 7, 9);
+  ctx.fillStyle = '#1a2233';
+  roundRect(ctx, x + 24, y + 9, 11, 9, 1.5);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(94, 234, 255, 0.55)';
+  ctx.fillRect(x + 26, y + 12, 7, 1.6);
+  ctx.fillRect(x + 26, y + 15, 5, 1.6);
   ctx.fillStyle = '#ffd166';
   ctx.beginPath();
-  ctx.arc(x + 29, y + 17, 3.5, 0, Math.PI * 2);
+  ctx.arc(x + 29, y + 24, 3.5, 0, Math.PI * 2);
   ctx.fill();
 }
 
 function drawPlant(ctx, x, y) {
   ctx.fillStyle = '#5a3a22';
   roundRect(ctx, x + 13, y + 24, 14, 10, 3);
+  ctx.fill();
+  ctx.fillStyle = '#7a4e2c';
+  roundRect(ctx, x + 12, y + 23, 16, 4, 2);
+  ctx.fill();
+  ctx.fillStyle = '#3a2413';
+  ctx.beginPath();
+  ctx.ellipse(x + 20, y + 25, 6, 2.2, 0, 0, Math.PI * 2);
   ctx.fill();
   ctx.fillStyle = COLORS.plant;
   for (const [dx, dy, r] of [[14, 18, 8], [24, 13, 9], [27, 22, 7], [18, 24, 6]]) {
@@ -217,6 +243,19 @@ export function drawLootItem(ctx, item, time) {
   if (item.taken) return;
   const cx = item.tx * TILE + TILE / 2;
   const cy = item.ty * TILE + TILE / 2 + Math.sin(time * 3 + item.tx * 1.7 + item.ty) * 2.5;
+  if (item.kind !== '$') {
+    // Stone plinth the gold and gems sit on; the treasure bobs, the stone doesn't.
+    const gy = item.ty * TILE + TILE - 7;
+    ctx.fillStyle = 'rgba(8, 11, 22, 0.55)';
+    ctx.beginPath();
+    ctx.ellipse(cx, gy + 2, 14, 4.5, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#3d4a6e';
+    roundRect(ctx, cx - 12, gy - 6, 24, 7, 2);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(190, 205, 240, 0.35)';
+    ctx.fillRect(cx - 12, gy - 6, 24, 2);
+  }
   ctx.beginPath();
   ctx.arc(cx, cy, 15, 0, Math.PI * 2);
   ctx.fillStyle = item.kind === '*' ? 'rgba(94, 234, 255, 0.13)' : 'rgba(255, 209, 102, 0.13)';

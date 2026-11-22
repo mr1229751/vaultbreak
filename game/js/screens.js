@@ -86,6 +86,31 @@ function drawHelpPanel(ctx, game) {
 export function drawLevelSelect(ctx, game) {
   ctx.fillStyle = '#070b16';
   ctx.fillRect(0, 0, 1280, 800);
+  // Dressed backdrop: a faint marble checker under a double gold frame.
+  for (let by = 0; by < 10; by++) {
+    for (let bx = 0; bx < 16; bx++) {
+      if ((bx + by) % 2 === 0) {
+        ctx.fillStyle = 'rgba(120, 150, 220, 0.045)';
+        ctx.fillRect(bx * 80, by * 80, 80, 80);
+      }
+    }
+  }
+  ctx.strokeStyle = 'rgba(255, 209, 102, 0.5)';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(14, 14, 1252, 772);
+  ctx.strokeStyle = 'rgba(255, 209, 102, 0.22)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(22, 22, 1236, 756);
+  ctx.fillStyle = 'rgba(255, 209, 102, 0.65)';
+  for (const [fx, fy] of [[14, 14], [1266, 14], [14, 786], [1266, 786]]) {
+    ctx.beginPath();
+    ctx.moveTo(fx, fy - 7);
+    ctx.lineTo(fx + 7, fy);
+    ctx.lineTo(fx, fy + 7);
+    ctx.lineTo(fx - 7, fy);
+    ctx.closePath();
+    ctx.fill();
+  }
   ctx.textAlign = 'center';
   ctx.fillStyle = GOLD;
   ctx.font = 'bold 52px Georgia, "Times New Roman", serif';
